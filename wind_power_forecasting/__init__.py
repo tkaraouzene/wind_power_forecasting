@@ -10,4 +10,5 @@ X_TEST_FILE = RAW_DATA_DIR + 'X_test_v2.csv'
 # Input data labels
 
 TIME_LABEL = 'Time'
+TARGET_LABEL = ''
 WF_LABEL = 'WF'

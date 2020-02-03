@@ -3,8 +3,7 @@ from typing import List
 import numpy as np
 import pandas as pd
 
-from tsmodeling.features.time import compute_second_of_minute
-from wind_power_forecasting.features_extraction.time import compute_minute_of_day
+from wind_power_forecasting.features_extraction.time import compute_minute_of_day, compute_second_of_minute
 
 
 def add_cycle_time_descriptor(df: pd.DataFrame,
