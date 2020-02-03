@@ -16,12 +16,10 @@ def add_cycle_time_descriptor(df: pd.DataFrame,
                               label_prefix: str = 'cyclical_',
                               copy=True):
     if time_descriptor is None and index_attribute is None:
-        # TODO
-        raise ValueError('TODO')
+        raise ValueError('time_descriptor and index_attribute cannot be both None')
 
     if time_descriptor is not None and index_attribute is not None:
-        # TODO
-        raise ValueError('TODO')
+        raise ValueError('time_descriptor and index_attribute cannot be both defined')
 
     if index_attribute is not None:
         time_descriptor = getattr(df.index, index_attribute)
@@ -33,12 +31,10 @@ def add_cycle_time_descriptor(df: pd.DataFrame,
         df = df.copy()
 
     if label is None:
-
         if index_attribute is not None:
-            label = 'cyclical_' + index_attribute
+            label = label_prefix + index_attribute
         else:
-            # TODO
-            raise ValueError('TODO')
+            raise ValueError('label has to be provided when index_attribute is None.')
 
     for trig_func in trig_func_list:
         trig_func_str = trig_func.__name__
