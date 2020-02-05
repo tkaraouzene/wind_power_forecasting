@@ -53,8 +53,7 @@ class WindPowerForecaster(BaseEstimator, RegressorMixin):
 
     def _features_selection(self, X_df, wp_prefix):
         X_df = remove_numerical_weather_features(X_df, wp_prefix)
-        kept_features = [ID_LABEL]
-        X_df = remove_collinear_drivers(X_df, force_keeping=kept_features, threshold=10)
+        X_df = remove_collinear_drivers(X_df, force_keeping=ID_LABEL, threshold=10)
 
         return X_df
 
