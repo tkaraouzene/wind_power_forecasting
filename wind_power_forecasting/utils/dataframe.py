@@ -5,6 +5,27 @@ from sklearn.utils import check_consistent_length, check_array
 
 def get_sub_df(df: pd.DataFrame, column_label: str, kept_values, keep_column: bool = False,
                reset_index: bool = False) -> pd.DataFrame:
+    """
+    Subset a dataframe selecting values within a specific column.
+
+    Parameters
+    ----------
+    {df}
+    column_label: str
+    kept_values: array-like or str
+        Values to keep
+    keep_column: bool, optional
+        If `False` (**default**) `column_label` is dropped from the output dataframe.
+    reset_index: bool, optional
+        If `False` (**default**) the output dataframe index is NOT reset.
+
+    Returns
+    -------
+    sub_df: pandas DataFrame object
+        Subset of the input dataframe `df`.
+
+    """
+
     if isinstance(kept_values, str):
         # if not isinstance(kept_values, Iterable) or isinstance(kept_values, str):
         kept_values = [kept_values]
@@ -134,7 +155,6 @@ def df_to_X_y(X_y_df: pd.DataFrame = None, X_df: pd.DataFrame = None, y_df: pd.D
     return X_out, y_out, X_labels
 
 
-
 def split_features_to_process_df(df, force_keeping=None):
     """
 
@@ -160,3 +180,25 @@ def split_features_to_process_df(df, force_keeping=None):
         kept_features_df = None
 
     return df, kept_features_df
+
+
+def extract_columns(df: pd.DataFrame, prefix: str = None, suffix: str = None, contained: str = None):
+    subset_columns = list(df)
+
+    if prefix is not None:
+        subset_columns = [c for c in subset_columns if c.startswith(prefix)]
+
+    if suffix is not None:
+        subset_columns = [c for c in subset_columns if c.endswith(suffix)]
+
+    if contained is not None:
+        subset_columns = [c for c in subset_columns if c.contains(contained)]
+
+    return df.loc[:, subset_columns]
+
+
+def copy_or_not_copy(df: pd.DataFrame, copy=True) -> pd.DataFrame:
+    if copy:
+        df = df.copy()
+
+    return df
