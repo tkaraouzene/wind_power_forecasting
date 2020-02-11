@@ -1,5 +1,20 @@
 ## Changelog
 
+## 1.0.3
+
+### Feature extraction
+
+1. cyclical time encoding:
+
+   2. remove ``half_hour_of_day``
+   5. remove ``day_of_week``
+
+2. remove wind vector azimuth
+3. remove meteorological wind direction
+4. lags:
+   + **Features:** wind features only
+   + **range:** ``[1]``
+
 ## 1.0.2
 
 ### Refactoring
