@@ -1,8 +1,8 @@
 from sklearn.base import BaseEstimator, RegressorMixin
 
 from wind_power_forecasting import NWP_PREFIX, ID_LABEL
-from wind_power_forecasting.features_extraction.cyclical_time import add_cyclical_time_feature
-from wind_power_forecasting.features_extraction.weather import add_numerical_weather_prediction_median, \
+from wind_power_forecasting.features_extraction.time.cyclical_time import add_cyclical_time_feature
+from wind_power_forecasting.features_extraction.weather.weather import add_numerical_weather_prediction_median, \
     add_numerical_weather_prediction_shift
 from wind_power_forecasting.features_selection.numerical_weather_prediction import remove_numerical_weather_features
 from wind_power_forecasting.features_selection.variance_inflation_factor import remove_collinear_drivers
