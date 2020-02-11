@@ -1,13 +1,14 @@
-from itertools import product
-
 import pandas as pd
+from itertools import product
 
 from wind_power_forecasting.utils.dataframe import copy_or_not_copy
 
 
-def add_lags(df: pd.DataFrame, lag_range, to_lag_labels, copy=True):
+def add_lags(df: pd.DataFrame, lag_range, to_lag_labels=None, copy=True):
     df = copy_or_not_copy(df, copy)
 
+    if to_lag_labels is None:
+        to_lag_labels = list(df)
 
     if isinstance(to_lag_labels, str):
         to_lag_labels = [to_lag_labels]
