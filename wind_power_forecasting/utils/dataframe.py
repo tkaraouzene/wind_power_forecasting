@@ -1,3 +1,4 @@
+import numpy as np
 import pandas as pd
 from nose.tools import assert_is_none, assert_is_not_none, assert_equal
 from sklearn.utils import check_consistent_length, check_array
@@ -143,7 +144,7 @@ def df_to_X_y(X_y_df: pd.DataFrame = None, X_df: pd.DataFrame = None, y_df: pd.D
 
     if output_type == 'array':
         X_out = check_array(X_df, accept_sparse='csr')
-        y_out = check_array(y_df, ensure_2d=False)
+        y_out = np.ravel(check_array(y_df, ensure_2d=False))
 
     elif output_type == 'dataframe':
         X_out = X_df
