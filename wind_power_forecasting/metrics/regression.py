@@ -1,10 +1,9 @@
-import numpy as np
-import pandas as pd
 from sklearn.metrics.regression import _check_reg_targets
 from sklearn.utils import check_consistent_length
+import numpy as np
+import pandas as pd
 
-
-def theils_u1_error(y_true, y_hat, sample_weight=None, multioutput='uniform_average'):
+def theils_u1_error(y_true, y_pred, sample_weight=None, multioutput='uniform_average'):
     """
     Ref: http://www.forecastingprinciples.com/data/definitions/theil's%20u.html
     Theil, H. (1958), Economic Forecasts and Policy. Amsterdam: North Holland.
@@ -12,7 +11,7 @@ def theils_u1_error(y_true, y_hat, sample_weight=None, multioutput='uniform_aver
     This formula is implemented but not used because considered ambiguous by Bliemel.
 
     :param y_true: true value
-    :param y_hat: predicted value
+    :param y_pred: predicted value
     :param sample_weight:
     :param multioutput:
 
@@ -21,12 +20,12 @@ def theils_u1_error(y_true, y_hat, sample_weight=None, multioutput='uniform_aver
 
     if isinstance(y_true, pd.DataFrame):
         y_true = y_true.values
-    # return mean_absolute_error(y_true, y_hat)
-    if len(y_true) != len(y_hat):
+    # return mean_absolute_error(y_true, y_pred)
+    if len(y_true) != len(y_pred):
         raise ValueError('The real values and the prediction must have the same lenght,'
-                         ' {} != {}'.format(len(y_true), len(y_hat)))
+                         ' {} != {}'.format(len(y_true), len(y_pred)))
 
-    _, y_true, y_pred, multioutput = _check_reg_targets(y_true, y_hat, multioutput)
+    _, y_true, y_pred, multioutput = _check_reg_targets(y_true, y_pred, multioutput)
     check_consistent_length(y_true, y_pred, sample_weight)
 
     # Root Mean Squared Error
@@ -46,7 +45,7 @@ def theils_u1_error(y_true, y_hat, sample_weight=None, multioutput='uniform_aver
     return np.average(output_error, weights=multioutput)
 
 
-def theils_u2_error(y_true, y_hat, sample_weight=None, multioutput='uniform_average'):
+def theils_u2_error(y_true, y_pred, sample_weight=None, multioutput='uniform_average'):
     """
     Ref: http://www.forecastingprinciples.com/data/definitions/theil's%20u.html
 
@@ -55,7 +54,7 @@ def theils_u2_error(y_true, y_hat, sample_weight=None, multioutput='uniform_aver
     This formula is implemented because considered non-ambiguous by Bliemel.
 
     :param y_true: true value
-    :param y_hat: predicted value
+    :param y_pred: predicted value
     :param sample_weight:
     :param multioutput:
 
@@ -64,12 +63,12 @@ def theils_u2_error(y_true, y_hat, sample_weight=None, multioutput='uniform_aver
 
     if isinstance(y_true, pd.DataFrame):
         y_true = y_true.values
-    # return mean_absolute_error(y_true, y_hat)
-    if len(y_true) != len(y_hat):
+    # return mean_absolute_error(y_true, y_pred)
+    if len(y_true) != len(y_pred):
         raise ValueError('The real values and the prediction must have the same lenght,'
-                         ' {} != {}'.format(len(y_true), len(y_hat)))
+                         ' {} != {}'.format(len(y_true), len(y_pred)))
 
-    _, y_true, y_pred, multioutput = _check_reg_targets(y_true, y_hat, multioutput)
+    _, y_true, y_pred, multioutput = _check_reg_targets(y_true, y_pred, multioutput)
     check_consistent_length(y_true, y_pred, sample_weight)
 
     # Root Squared Error

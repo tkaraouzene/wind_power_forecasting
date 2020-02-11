@@ -56,7 +56,7 @@ class WindPowerForecaster(BaseEstimator, RegressorMixin):
             X_df = self._preprocess_data(X_df, copy=False)
             X_df = self._features_extraction(X_df, copy=False)
             X_df = self._features_selection(X_df, from_fit=False)
-            X_df, _ = self._clean_data(X_df)
+            X_df, _ = self._clean_data(X_df, from_fit=False)
 
         X = check_array(X_df, accept_sparse='csr')
         y_pred = self.estimator.predict(X)
@@ -105,15 +105,24 @@ class WindPowerForecaster(BaseEstimator, RegressorMixin):
 
         return X_df
 
-    def _clean_data(self, X_df, y_df=None, copy=True):
+    def _clean_data(self, X_df, y_df=None, from_fit=True, copy=True):
 
         X_df = copy_or_not_copy(X_df, copy)
-        X_df = X_df.dropna()
+
+        if from_fit:
+            X_df = X_df.dropna()
+        else:
+            X_df = X_df.fillna(method='ffill')
+            X_df = X_df.fillna(0)
 
         if y_df is not None:
             y_df = copy_or_not_copy(y_df, copy)
             y_df = get_sub_df(y_df, ID_LABEL, X_df[ID_LABEL])
 
-        X_df = X_df.drop(ID_LABEL, axis=1)
+        if from_fit:
+            X_df = X_df.drop(ID_LABEL, axis=1)
+        else:
+            X_df = X_df.set_index(ID_LABEL)
+            X_df.index = X_df.index.astype(int)
 
         return X_df, y_df

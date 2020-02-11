@@ -7,7 +7,7 @@ from wind_power_forecasting.features_extraction.time.linear_time import compute_
 
 
 def add_cyclical_time_feature(df,
-                              hour_of_day=False,
+                                  hour_of_day=False,
                               half_hour_of_day=False,
                               week_of_year=False,
                               month_of_year=False,

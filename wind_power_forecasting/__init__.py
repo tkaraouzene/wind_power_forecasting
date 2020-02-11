@@ -2,6 +2,8 @@
 
 # Define global variables
 DATA_DIR = '../data/'
+RESULTS_DIR = '../results/'
+SUBMISSION_FILE = RESULTS_DIR + 'submission.csv'
 RAW_DATA_DIR = DATA_DIR + 'raw/'
 X_TRAIN_FILE = RAW_DATA_DIR + 'X_train_v2.csv'
 Y_TRAIN_FILE = RAW_DATA_DIR + 'Y_train_sl9m6Jh.csv'
