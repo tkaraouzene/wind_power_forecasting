@@ -1,7 +1,16 @@
 ## Changelog
 
+## x.x.
 
-## 1.0.0 -- First try
+## Refactoring
+
++ ``model`` to ``models``
+
+## 1.0.1
+
++ add the submission file [submission.csv](results/submission.csv) to the repo
+
+## 1.0.0 -- First submission
 
 ### Preprocessing
 
