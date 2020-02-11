@@ -1,3 +1,4 @@
+import numpy as np
 import pandas as pd
 from sklearn.base import BaseEstimator, RegressorMixin
 from sklearn.ensemble import RandomForestRegressor
@@ -34,14 +35,15 @@ class WindPowerForecaster(BaseEstimator, RegressorMixin):
 
         self.X = X
         self.y = y
+        self.y_median = np.nanmedian(y)
         self.X_y_idx = X_df.index
         self.X_labels = list(X_df)
         self.y_label = list(y_df)
-        self.estimator = RandomForestRegressor().fit(X, y)
+        self.estimator = RandomForestRegressor(random_state=42).fit(X, y)
 
         return self
 
-    def add_prediction(self, X_df,prediction_label='prediction', preprocess=True, na_rm=False):
+    def add_prediction(self, X_df, prediction_label='prediction', preprocess=True, na_rm=False):
 
         pred_df = self.predict(X_df, preprocess=preprocess, output_type='dataframe', prediction_label=prediction_label)
         how = 'right' if na_rm else 'left'
@@ -113,7 +115,7 @@ class WindPowerForecaster(BaseEstimator, RegressorMixin):
             X_df = X_df.dropna()
         else:
             X_df = X_df.fillna(method='ffill')
-            X_df = X_df.fillna(0)
+            X_df = X_df.fillna(self.y_median)
 
         if y_df is not None:
             y_df = copy_or_not_copy(y_df, copy)

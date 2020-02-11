@@ -1,10 +1,20 @@
 ## Changelog
 
-## x.x.
+## 1.0.2
 
-## Refactoring
+### Refactoring
 
 + ``model`` to ``models``
+
+### Fitting
+
++ Estimator = ``RandomForestRegressor``
++ Parameters:
+
+  + set ``random_state=42`` instead of ``None``
++ Fill ``NAs`` strategy:
+
+  2. **Second fill:** By ``self.y_median``, i.e the median Production median (instead of 0)
 
 ## 1.0.1
 
