@@ -3,7 +3,7 @@ from typing import List
 import numpy as np
 import pandas as pd
 
-from wind_power_forecasting.features_extraction.time import compute_minute_of_day, compute_second_of_minute
+from wind_power_forecasting.features_extraction.time.linear_time import compute_minute_of_day, compute_second_of_minute
 
 
 def add_cyclical_time_feature(df,

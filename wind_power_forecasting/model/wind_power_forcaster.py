@@ -2,8 +2,9 @@ from sklearn.base import BaseEstimator, RegressorMixin
 
 from wind_power_forecasting import NWP_PREFIX, ID_LABEL
 from wind_power_forecasting.features_extraction.time.cyclical_time import add_cyclical_time_feature
-from wind_power_forecasting.features_extraction.weather.weather import add_numerical_weather_prediction_median, \
-    add_numerical_weather_prediction_shift
+from wind_power_forecasting.features_extraction.time.time_shift import add_lags
+from wind_power_forecasting.features_extraction.weather.weather import add_numerical_weather_prediction_median
+from wind_power_forecasting.features_extraction.weather.wind import add_wind_speed
 from wind_power_forecasting.features_selection.numerical_weather_prediction import remove_numerical_weather_features
 from wind_power_forecasting.features_selection.variance_inflation_factor import remove_collinear_drivers
 from wind_power_forecasting.preprocessing.inputs import df_to_ts
@@ -45,9 +46,10 @@ class WindPowerForecaster(BaseEstimator, RegressorMixin):
         # 2. Meteorological features merging
         wp_label = 'wp_value'
         X_df = add_numerical_weather_prediction_median(X_df, wp_label=wp_label, copy=copy)
+        X_df = add_wind_speed(X_df, 'U', 'V', 'wind_speed', copy)
 
         # 3. Meteorological features lags
-        X_df = add_numerical_weather_prediction_shift(X_df, shift_range=[1, 2], wp_label=wp_label, copy=copy)
+        X_df = add_lags(X_df, lag_range=[1, 2], to_lag_labels=['U', 'V', 'T', 'CLCT', 'wind_speed'])
 
         return X_df
 
