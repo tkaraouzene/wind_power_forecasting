@@ -7,13 +7,15 @@
 1. cyclical time encoding:
 
    2. remove ``half_hour_of_day``
-   5. remove ``day_of_week``
+   3. remove ``day_of_week``
 
-2. remove wind vector azimuth
-3. remove meteorological wind direction
-4. lags:
+2. lags:
    + **Features:** wind features only
    + **range:** ``[1]``
+
+3. rollmean:
+   + **Features:** ``[wind_speed, wind_vector_azimuth, meteorological_wind_direction]``
+   + **period:** ``[3H]``
 
 ## 1.0.2
 

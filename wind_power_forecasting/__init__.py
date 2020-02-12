@@ -11,9 +11,13 @@ X_TEST_FILE = RAW_DATA_DIR + 'X_test_v2.csv'
 
 
 # Input data labels
-
 TIME_LABEL = 'Time'
 TARGET_LABEL = 'Production'
 ID_LABEL = 'ID'
 WF_LABEL = 'WF'
 NWP_PREFIX = 'NWP'
+
+# Added labels
+WIND_SPEED_LABEL = 'wind_speed'
+WIND_VECTOR_AZIMUTH_LABEL = 'wind_vector_azimuth'
+METEOROLOGICAL_WIND_DIRECTION_LABEL = 'meteorological_wind_direction'

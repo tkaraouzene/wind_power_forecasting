@@ -20,10 +20,11 @@ def add_wind_vector_azimuth(df, u_label, v_label, wind_speed_label='wind_vector_
     return df
 
 
-def add_meteorological_wind_direction(df, u_label, v_label, wind_speed_label='meteorological_wind_direction', copy=True):
+def add_meteorological_wind_direction(df, u_label, v_label,
+                                      meteorological_wind_direction_label='meteorological_wind_direction', copy=True):
     df = copy_or_not_copy(df, copy)
 
-    df[wind_speed_label] = compute_meteorological_wind_direction(df[u_label], df[v_label])
+    df[meteorological_wind_direction_label] = compute_meteorological_wind_direction(df[u_label], df[v_label])
 
     return df
 
