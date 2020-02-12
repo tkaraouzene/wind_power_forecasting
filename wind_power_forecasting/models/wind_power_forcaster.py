@@ -4,7 +4,6 @@ from sklearn.base import BaseEstimator, RegressorMixin
 from sklearn.metrics import make_scorer
 from sklearn.utils import check_array
 
-from wind_power.metrics.cape import cape
 from wind_power_forecasting import NWP_PREFIX, ID_LABEL, WIND_SPEED_LABEL, WIND_VECTOR_AZIMUTH_LABEL, \
     METEOROLOGICAL_WIND_DIRECTION_LABEL
 from wind_power_forecasting.features_extraction.time.cyclical_time import add_cyclical_time_feature
@@ -16,6 +15,7 @@ from wind_power_forecasting.features_extraction.weather.wind import add_wind_spe
 from wind_power_forecasting.features_selection.numerical_weather_prediction import remove_numerical_weather_features
 from wind_power_forecasting.features_selection.variance_inflation_factor import remove_collinear_drivers
 from wind_power_forecasting.features_selection.variance_threshold import remove_variance_threshold
+from wind_power_forecasting.metrics.regression import cumulated_absolute_percentage_error
 from wind_power_forecasting.model_selection.autotuning import model_autotuning
 from wind_power_forecasting.preprocessing.inputs import df_to_ts
 from wind_power_forecasting.utils.dataframe import copy_or_not_copy, get_sub_df, df_to_X_y
@@ -26,6 +26,8 @@ class WindPowerForecaster(BaseEstimator, RegressorMixin):
     def __init__(self, target_label: str, datetime_label: str):
         self.target_label = target_label
         self.datetime_label = datetime_label
+        self.score_function = cumulated_absolute_percentage_error
+        self.scorer = make_scorer(self.score_function, greater_is_better=False)
 
     def fit(self, X_df, y_df):
         """Fit model."""
@@ -86,7 +88,7 @@ class WindPowerForecaster(BaseEstimator, RegressorMixin):
 
     def score(self, X, y, sample_weight=None):
 
-        return cape(y, self.predict(X))
+        return self.score_function(y, self.predict(X))
 
     def _preprocess_data(self, X_df, copy=True):
         # 1. Convert dataframe into time series
@@ -164,5 +166,4 @@ class WindPowerForecaster(BaseEstimator, RegressorMixin):
 
     def _model_selection(self, X, y, **kwargs):
 
-        scorer = make_scorer(cape, greater_is_better=False)
-        return model_autotuning(X, y, scoring=scorer, **kwargs)
+        return model_autotuning(X, y, scoring=self.scorer, **kwargs)

@@ -4,6 +4,30 @@ from sklearn.metrics.regression import _check_reg_targets
 from sklearn.utils import check_consistent_length
 
 
+def cumulated_absolute_percentage_error(y_true, y_pred):
+    """
+    CAPE (Cumulated Absolute Percentage Error)
+    Function used by CNR for the evaluation of predictions
+
+    Parameters
+    ----------
+    y_true: array-like of shape = (n_samples)
+        Ground truth (correct) target values.
+    y_pred: array-like of shape = (n_samples)
+        Estimated target values.
+
+    Returns
+    -------
+    cape: float
+        The metric evaluated with the two dataframes. This must not be NaN.
+
+    References
+    ----------
+    """
+
+    return 100 * np.sum(np.abs(y_pred - y_true)) / np.sum(y_true)
+
+
 def theils_u1_error(y_true, y_pred, sample_weight=None, multioutput='uniform_average'):
     """
     Ref: http://www.forecastingprinciples.com/data/definitions/theil's%20u.html
