@@ -57,3 +57,8 @@ def wind_vector_azimuth_to_meteorological_wind_direction(wind_vector_azimuth):
 
 def meteorological_wind_direction_to_wind_vector_azimuth(meteorological_wind_direction):
     return meteorological_wind_direction - 180
+
+
+def compute_wind_chill():
+    # cf. https://fr.wikipedia.org/wiki/Refroidissement_%C3%A9olien#Calcul
+    pass
