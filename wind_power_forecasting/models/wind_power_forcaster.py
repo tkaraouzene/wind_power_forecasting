@@ -1,8 +1,10 @@
 import numpy as np
 import pandas as pd
 from sklearn.base import BaseEstimator, RegressorMixin
+from sklearn.metrics import make_scorer
 from sklearn.utils import check_array
 
+from wind_power.metrics.cape import cape
 from wind_power_forecasting import NWP_PREFIX, ID_LABEL, WIND_SPEED_LABEL, WIND_VECTOR_AZIMUTH_LABEL, \
     METEOROLOGICAL_WIND_DIRECTION_LABEL
 from wind_power_forecasting.features_extraction.time.cyclical_time import add_cyclical_time_feature
@@ -74,6 +76,10 @@ class WindPowerForecaster(BaseEstimator, RegressorMixin):
             out = pd.DataFrame(index=X_df.index, data=y_pred, columns=[prediction_label])
 
         return out
+
+    def score(self, X, y, sample_weight=None):
+
+        return cape(y, self.predict(X))
 
     def _preprocess_data(self, X_df, copy=True):
         # 1. Convert dataframe into time series
@@ -150,4 +156,6 @@ class WindPowerForecaster(BaseEstimator, RegressorMixin):
         return X_df, y_df
 
     def _model_selection(self, X, y, **kwargs):
-        return model_autotuning(X, y, **kwargs)
+
+        scorer = make_scorer(cape, greater_is_better=False)
+        return model_autotuning(X, y, scoring=scorer, **kwargs)

@@ -3,7 +3,6 @@ from typing import Dict
 import numpy as np
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.linear_model import LinearRegression
-from sklearn.model_selection import TimeSeriesSplit, GridSearchCV, RandomizedSearchCV
 
 
 def get_estimator_parameters_dict(estimator) -> Dict:
@@ -38,4 +37,3 @@ def get_estimator_parameters_dict(estimator) -> Dict:
         raise ValueError('Unexpected estimator: {}'.format(estimator))
 
     return params_grid
-
