@@ -29,5 +29,4 @@ if __name__ == '__main__':
     final_predict_df = pd.concat(predict_dfs).reset_index()
 
     final_predict_df.to_csv(SUBMISSION_FILE, index=False)
-    pd.DataFrame({'aaa'}).rolling()
     pass
