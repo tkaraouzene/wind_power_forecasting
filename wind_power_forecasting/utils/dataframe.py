@@ -193,7 +193,7 @@ def extract_columns(df: pd.DataFrame, prefix: str = None, suffix: str = None, co
         subset_columns = [c for c in subset_columns if c.endswith(suffix)]
 
     if contained is not None:
-        subset_columns = [c for c in subset_columns if c.contains(contained)]
+        subset_columns = [c for c in subset_columns if contained in c]
 
     return df.loc[:, subset_columns]
 

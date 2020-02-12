@@ -9,7 +9,7 @@ def format_nwp(df, wp_number_label, wp_hour_label, wp_day_offset_label, w_featur
         df = df.copy()
 
     # 1. extract NWP columns
-    df = extract_columns(df, prefix=NWP_PREFIX)
+    df = extract_columns(df, prefix=NWP_PREFIX, contained='D-')
 
     # 2. dataframe melting by NWP
     df = melt_nwp(df, wp_label)

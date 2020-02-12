@@ -1,7 +1,6 @@
 import numpy as np
 import pandas as pd
 from sklearn.base import BaseEstimator, RegressorMixin
-from sklearn.ensemble import RandomForestRegressor
 from sklearn.utils import check_array
 
 from wind_power_forecasting import NWP_PREFIX, ID_LABEL, WIND_SPEED_LABEL, WIND_VECTOR_AZIMUTH_LABEL, \
@@ -35,17 +34,17 @@ class WindPowerForecaster(BaseEstimator, RegressorMixin):
         X_df = self._features_selection(X_df, wp_prefix=NWP_PREFIX)
         X_df, y_df = self._data_cleaning(X_df, y_df)
         X, y, X_labels = df_to_X_y(X_df=X_df, y_df=y_df)
-        rf = RandomForestRegressor()
-        model_autotuning(X, y, rf)
-
+        best_model, best_params, best_score = self._model_selection(X, y)
 
         self.X = X
         self.y = y
-        self.y_median = np.nanmedian(y)
-        self.X_y_idx = X_df.index
+        self.idx = X_df.index
         self.X_labels = list(X_df)
         self.y_label = list(y_df)
-        self.estimator = RandomForestRegressor(random_state=42).fit(X, y)
+        self.y_median = np.nanmedian(y)
+        self.estimator = best_model
+        self.best_params = best_params
+        self.best_estimator = best_score
 
         return self
 
@@ -149,3 +148,6 @@ class WindPowerForecaster(BaseEstimator, RegressorMixin):
             X_df.index = X_df.index.astype(int)
 
         return X_df, y_df
+
+    def _model_selection(self, X, y, **kwargs):
+        return model_autotuning(X, y, **kwargs)
