@@ -77,6 +77,13 @@ class WindPowerForecaster(BaseEstimator, RegressorMixin):
 
         return out
 
+    def fit_predict(self, X_train_df, y_train_df, X_test_df=None, **kwargs):
+
+        self.fit(X_train_df, y_train_df)
+        X_to_predict_df = X_test_df if X_test_df is not None else X_train_df
+
+        return self.predict(X_to_predict_df, **kwargs)
+
     def score(self, X, y, sample_weight=None):
 
         return cape(y, self.predict(X))
