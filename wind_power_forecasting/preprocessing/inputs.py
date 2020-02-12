@@ -1,5 +1,9 @@
 import pandas as pd
 
+from wind_power_forecasting.preprocessing.dataframe import sort_df_index_if_needed, \
+    convert_df_index_to_datetime_if_needed
+from wind_power_forecasting.utils.dataframe import copy_or_not_copy
+
 
 def input_preprocessing(X_df: pd.DataFrame, datetime_label) -> pd.DataFrame:
 
@@ -13,24 +17,23 @@ def input_preprocessing(X_df: pd.DataFrame, datetime_label) -> pd.DataFrame:
     return X_df
 
 
-def df_to_ts(X_df: pd.DataFrame, datetime_label: str, freq, copy=False) -> pd.DataFrame:
+def df_to_ts(df: pd.DataFrame, datetime_label: str, freq, copy=False) -> pd.DataFrame:
     # Copy the dataframe to avoid border effects (if needed).
-    if copy:
-        X_df = X_df.copy()
+    df = copy_or_not_copy(df, copy)
 
     # Set the datetime column as dataframe index and check they are no duplicated.
-    X_df.set_index(datetime_label, inplace=True, verify_integrity=True)
+    df.set_index(datetime_label, inplace=True, verify_integrity=True)
 
     # Convert the index into a datetime.
-    X_df.index = pd.to_datetime(X_df.index)
+    convert_df_index_to_datetime_if_needed(df, copy=False)
 
     # Sort the index
-    X_df.sort_index(inplace=True)
+    sort_df_index_if_needed(df, copy=False)
 
     # Set the dataframe frequency.
-    X_df = X_df.asfreq(freq)
+    df = df.asfreq(freq)
 
-    return X_df
+    return df
 
 
 def remove_na(df, copy=False, **kwargs):
