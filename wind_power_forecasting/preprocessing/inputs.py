@@ -6,7 +6,6 @@ from wind_power_forecasting.utils.dataframe import copy_or_not_copy
 
 
 def input_preprocessing(X_df: pd.DataFrame, datetime_label) -> pd.DataFrame:
-
     # Convert dataframe into time series:
     #   1. Set datetime column as index
     #   2. Convert it into datetime

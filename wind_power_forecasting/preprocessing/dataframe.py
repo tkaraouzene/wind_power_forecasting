@@ -5,7 +5,6 @@ from wind_power_forecasting.utils.dataframe import copy_or_not_copy
 
 
 def sort_df_index_if_needed(df, copy=True) -> pd.DataFrame:
-
     if not df.index.is_monotonic_increasing:
         df = copy_or_not_copy(df, copy)
         df.sort_index(inplace=True)

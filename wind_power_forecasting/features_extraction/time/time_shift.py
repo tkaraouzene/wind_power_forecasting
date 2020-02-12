@@ -1,5 +1,6 @@
-import pandas as pd
 from itertools import product
+
+import pandas as pd
 
 from wind_power_forecasting.utils.dataframe import copy_or_not_copy
 
@@ -27,7 +28,6 @@ def add_rollmeans(df: pd.DataFrame, periods, to_roll_labels=None, to_not_roll_la
 
 
 def _get_labels_to_process(df, to_process_labels=None, to_not_process_labels=None):
-
     if to_not_process_labels is None:
         to_not_process_labels = []
 

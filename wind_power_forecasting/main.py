@@ -21,9 +21,8 @@ if __name__ == '__main__':
         y_train_wf_df = get_sub_df(y_train_all_df, ID_LABEL, X_train_wf_df[ID_LABEL], keep_column=True)
 
         wpf = WindPowerForecaster(target_label=TARGET_LABEL, datetime_label=TIME_LABEL)
-
-        wpf.fit(X_train_wf_df, y_train_wf_df)
-        predict_df = wpf.predict(X_test_wf_df, output_type='dataframe', prediction_label='Production')
+        predict_df = wpf.fit_predict(X_train_wf_df, y_train_wf_df, X_test_wf_df,
+                                     output_type='dataframe', prediction_label='Production')
         predict_dfs.append(predict_df)
 
     final_predict_df = pd.concat(predict_dfs).reset_index()

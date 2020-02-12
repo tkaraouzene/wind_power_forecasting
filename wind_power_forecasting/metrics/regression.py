@@ -1,7 +1,8 @@
-from sklearn.metrics.regression import _check_reg_targets
-from sklearn.utils import check_consistent_length
 import numpy as np
 import pandas as pd
+from sklearn.metrics.regression import _check_reg_targets
+from sklearn.utils import check_consistent_length
+
 
 def theils_u1_error(y_true, y_pred, sample_weight=None, multioutput='uniform_average'):
     """

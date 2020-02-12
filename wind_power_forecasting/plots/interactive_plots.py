@@ -1,9 +1,9 @@
 from typing import Optional, Union, List
-import pandas as pd
-import plotly.offline as po
-import plotly.graph_objs as go
-from plotly.subplots import make_subplots
 
+import pandas as pd
+import plotly.graph_objs as go
+import plotly.offline as po
+from plotly.subplots import make_subplots
 
 
 def plot_offline_figure(fig, name='', filename='chart.html'):
@@ -36,7 +36,7 @@ def plot_timeseries(data: Union[pd.DataFrame, pd.Series], subplots: Optional[Lis
         fig = go.Figure(data=plots, layout=go.Layout(title=title))
     else:
         fig = make_subplots(rows=len(subplots), cols=1, shared_xaxes=True, print_grid=False,
-                                            subplot_titles=title)
+                            subplot_titles=title)
 
         idx_subplot = 1
         for col_list in subplots:

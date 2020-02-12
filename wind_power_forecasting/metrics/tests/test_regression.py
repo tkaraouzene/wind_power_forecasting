@@ -35,6 +35,6 @@ class TestTheilsU2Error:
 
         assert output1 == theils_u2_error(y_true, y_pred1)
         assert output2 == theils_u2_error(y_true, y_pred2)
-        
+
         with pytest.raises(ValueError):
             assert theils_u1_error(y_true, y_pred3)
