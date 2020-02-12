@@ -15,6 +15,7 @@ from wind_power_forecasting.features_extraction.weather.wind import add_wind_spe
 from wind_power_forecasting.features_selection.numerical_weather_prediction import remove_numerical_weather_features
 from wind_power_forecasting.features_selection.variance_inflation_factor import remove_collinear_drivers
 from wind_power_forecasting.features_selection.variance_threshold import remove_variance_threshold
+from wind_power_forecasting.model_selection.autotuning import model_autotuning
 from wind_power_forecasting.preprocessing.inputs import df_to_ts
 from wind_power_forecasting.utils.dataframe import copy_or_not_copy, get_sub_df, df_to_X_y
 
@@ -34,6 +35,9 @@ class WindPowerForecaster(BaseEstimator, RegressorMixin):
         X_df = self._features_selection(X_df, wp_prefix=NWP_PREFIX)
         X_df, y_df = self._data_cleaning(X_df, y_df)
         X, y, X_labels = df_to_X_y(X_df=X_df, y_df=y_df)
+        rf = RandomForestRegressor()
+        model_autotuning(X, y, rf)
+
 
         self.X = X
         self.y = y
