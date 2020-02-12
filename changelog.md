@@ -1,5 +1,12 @@
 ## Changelog
 
+## 1.1.0
+
+## Cross validation
+
++ **params distribution:** ``RandomizedSearchCV``
++ **scorer:** CAPE (from Anasse library)
+
 ## 1.0.3
 
 ### Feature extraction
