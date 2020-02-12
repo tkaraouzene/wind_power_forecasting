@@ -1,10 +1,25 @@
+from typing import List
+
 import numpy as np
 import pandas as pd
-from typing import List
 
 from wind_power_forecasting.features_extraction.time.linear_time import compute_minute_of_day, compute_second_of_minute, \
     compute_time_descriptor
 from wind_power_forecasting.utils.dataframe import copy_or_not_copy
+
+
+class UnexpectedTrigFunc(ValueError):
+    """
+    This error is raised when a column is found twice in a dataframe
+    """
+
+    def __init__(self, given_func, valid_func):
+        self.given_func = str(given_func)
+        self.valid_func = list(map(str, valid_func))
+        super(UnexpectedTrigFunc, self).__init__()
+
+    def __str__(self):
+        return 'Unexpected function: {}. Should be one of: {}'.format(self.given_func, self.valid_func)
 
 
 def add_cyclical_time_feature(df,
@@ -151,9 +166,12 @@ def add_cyclical_second_of_minute(df, added_label='second_of_minute', copy=False
 
 
 def cycle_transformation(num, denom, trig_func):
-    valid_func = [np.sin, np.cos]
-
-    if trig_func not in valid_func:
-        raise ValueError(trig_func, valid_func)
+    check_trigonometric_function(trig_func)
 
     return trig_func(2 * np.pi * num / denom)
+
+
+def check_trigonometric_function(trig_func):
+    valid_func = [np.sin, np.cos]
+    if trig_func not in valid_func:
+        raise UnexpectedTrigFunc(trig_func, valid_func)
