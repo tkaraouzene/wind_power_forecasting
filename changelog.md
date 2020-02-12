@@ -14,7 +14,7 @@
 1. cyclical time encoding:
 
    2. remove ``half_hour_of_day``
-   3. remove ``day_of_week``
+   3. remove ``day_of_week``p
 
 2. lags:
    + **Features:** wind features only
